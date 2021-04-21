@@ -423,7 +423,6 @@ paths:
           in: header
           name: Content-Type
           description: application/json
-          required: true
   /user:
     post:
       summary: Create New User
