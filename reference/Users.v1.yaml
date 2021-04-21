@@ -657,29 +657,28 @@ paths:
         content:
           application/json:
             schema:
+              description: ''
               type: object
               properties:
-                firstName:
-                  type: string
-                lastName:
-                  type: string
                 email:
                   type: string
-                dateOfBirth:
+                  minLength: 1
+                password:
                   type: string
-                  format: date
+                  minLength: 1
+                password_repeat:
+                  type: string
+                  minLength: 1
               required:
-                - firstName
-                - lastName
                 - email
-                - dateOfBirth
+                - password
+                - password_repeat
             examples:
-              Create User Bob Fellow:
+              Create a new user:
                 value:
-                  firstName: Bob
-                  lastName: Fellow
-                  email: bob.fellow@gmail.com
-                  dateOfBirth: '1996-08-24'
+                  email: email@test.com
+                  password: Aa987654
+                  password_repeat: Aa987654
         description: Post the necessary fields for the API to create a new user.
       description: Create a new user.
     parameters: []
