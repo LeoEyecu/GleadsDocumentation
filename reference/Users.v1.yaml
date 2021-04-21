@@ -181,6 +181,48 @@ paths:
                   - verifications_access
                   - device_access
                   - user
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  name:
+                    type: string
+                    minLength: 1
+                  message:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                  type:
+                    type: string
+                    minLength: 1
+                  data:
+                    type: object
+                    properties:
+                      msg:
+                        type: string
+                        minLength: 1
+                    required:
+                      - msg
+                required:
+                  - name
+                  - message
+                  - code
+                  - type
+                  - data
+              examples:
+                Invalid credentials:
+                  value:
+                    name: AuthInvalidCredentialsError
+                    message: Authentication error
+                    code: 401
+                    type: AUTH_ERROR
+                    data:
+                      msg: Invalid credentials
         '422':
           description: Form validation error
           content:
@@ -266,7 +308,7 @@ paths:
                 value:
                   email: test@test.com
                   password: Aa5685855
-      description: ''
+      description: User authentication
   /user:
     post:
       summary: Create New User
