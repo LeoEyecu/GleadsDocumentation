@@ -1,0 +1,203 @@
+openapi: 3.0.0
+info:
+  title: Verifications.v1
+  version: '1.0'
+servers:
+  - url: 'https://st-api.gleads.io'
+    description: DEV API
+paths:
+  /api/verifications/validate:
+    post:
+      summary: ''
+      operationId: post-api-verifications-validate
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  code:
+                    type: number
+                  critical:
+                    type: boolean
+                  description:
+                    type: string
+                    minLength: 1
+                required:
+                  - code
+                  - critical
+                  - description
+              examples:
+                Validation completed:
+                  value:
+                    code: 2000
+                    critical: false
+                    description: Verifications completed
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  name:
+                    type: string
+                    minLength: 1
+                  message:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                  type:
+                    type: string
+                    minLength: 1
+                  data:
+                    type: object
+                    properties:
+                      msg:
+                        type: string
+                        minLength: 1
+                    required:
+                      - msg
+                required:
+                  - name
+                  - message
+                  - code
+                  - type
+                  - data
+              examples:
+                Validation not match the token provided:
+                  value:
+                    name: VerificationInvalidCode
+                    message: Verification error
+                    code: 400
+                    type: VERIFICATION_ERROR_INVALID_CODE
+                    data:
+                      msg: The code provided is not valid
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  name:
+                    type: string
+                    minLength: 1
+                  message:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                  type:
+                    type: string
+                    minLength: 1
+                  data:
+                    type: object
+                    properties:
+                      msg:
+                        type: string
+                        minLength: 1
+                    required:
+                      - msg
+                required:
+                  - name
+                  - message
+                  - code
+                  - type
+                  - data
+              examples:
+                Validation is not exising:
+                  value:
+                    name: VerificationNotExist
+                    message: Verification error
+                    code: 400
+                    type: VERIFICATION_ERROR
+                    data:
+                      msg: Verification is not existing
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  name:
+                    type: string
+                    minLength: 1
+                  message:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                  type:
+                    type: string
+                    minLength: 1
+                  data:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      required:
+                        - type
+                        - message
+                        - field
+                        - nodeID
+                        - action
+                      properties:
+                        type:
+                          type: string
+                          minLength: 1
+                        message:
+                          type: string
+                          minLength: 1
+                        field:
+                          type: string
+                          minLength: 1
+                        nodeID:
+                          type: string
+                          minLength: 1
+                        action:
+                          type: string
+                          minLength: 1
+                required:
+                  - name
+                  - message
+                  - code
+                  - type
+                  - data
+              examples:
+                No token provided:
+                  value:
+                    name: ValidationError
+                    message: Parameters validation error!
+                    code: 422
+                    type: VALIDATION_ERROR
+                    data:
+                      - type: required
+                        message: The 'token' field is required.
+                        field: token
+                        nodeID: vps-2347f1db.vps.ovh.net.novalocal-549873
+                        action: verifications.validate
+                No code provided:
+                  value:
+                    name: ValidationError
+                    message: Parameters validation error!
+                    code: 422
+                    type: VALIDATION_ERROR
+                    data:
+                      - type: required
+                        message: The 'code' field is required.
+                        field: code
+                        nodeID: vps-2347f1db.vps.ovh.net.novalocal-549873
+                        action: verifications.validate
+      description: Validate a confirmation request
+components:
+  schemas: {}
