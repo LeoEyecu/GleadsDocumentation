@@ -929,7 +929,7 @@ paths:
     parameters: []
   /api/private/users/me:
     get:
-      summary: Your GET endpoint
+      summary: Get user informations (Private)
       tags: []
       responses:
         '200':
