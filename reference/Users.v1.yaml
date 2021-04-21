@@ -357,6 +357,12 @@ paths:
                   email: test@test.com
                   password: Aa5685855
       description: User authentication
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
   /user:
     post:
       summary: Create New User
