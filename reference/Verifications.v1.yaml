@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: Verifications.v1
+  title: Validations
   version: '1.0'
 servers:
   - url: 'https://st-api.gleads.io'
