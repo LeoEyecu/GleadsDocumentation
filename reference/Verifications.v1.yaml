@@ -8,7 +8,7 @@ servers:
 paths:
   /api/verifications/validate:
     post:
-      summary: ''
+      summary: Validate a confirmation request
       operationId: post-api-verifications-validate
       responses:
         '200':
