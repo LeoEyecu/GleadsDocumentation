@@ -927,6 +927,218 @@ paths:
         description: Post the necessary fields for the API to create a new user.
       description: Create a new user.
     parameters: []
+  /api/private/users/me:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  _key:
+                    type: string
+                    minLength: 1
+                  _id:
+                    type: string
+                    minLength: 1
+                  _rev:
+                    type: string
+                    minLength: 1
+                  email:
+                    type: string
+                    minLength: 1
+                  _created:
+                    type: string
+                    minLength: 1
+                  _updated:
+                    type: string
+                    minLength: 1
+                  devices:
+                    type: object
+                    properties:
+                      UG9zdG1hblJ1bnRpbWUvNy4yNi44LS00NS4xMi4yMjEuMTg=:
+                        type: object
+                        properties:
+                          id: {}
+                          verified:
+                            type: boolean
+                          date:
+                            type: string
+                            minLength: 1
+                        required:
+                          - verified
+                          - date
+                    required:
+                      - UG9zdG1hblJ1bnRpbWUvNy4yNi44LS00NS4xMi4yMjEuMTg=
+                  current_session:
+                    type: object
+                    properties:
+                      _key:
+                        type: string
+                        minLength: 1
+                      _id:
+                        type: string
+                        minLength: 1
+                      _rev:
+                        type: string
+                        minLength: 1
+                      user_id:
+                        type: string
+                        minLength: 1
+                      session_token:
+                        type: string
+                        minLength: 1
+                      expired:
+                        type: boolean
+                      meta:
+                        type: object
+                        properties:
+                          userAgent:
+                            type: string
+                            minLength: 1
+                          clientIp:
+                            type: string
+                            minLength: 1
+                          deviceHash:
+                            type: string
+                            minLength: 1
+                        required:
+                          - userAgent
+                          - clientIp
+                          - deviceHash
+                      session_unlocked:
+                        type: string
+                        minLength: 1
+                      verifications_access:
+                        type: object
+                        properties:
+                          code:
+                            type: number
+                          critical:
+                            type: boolean
+                          description:
+                            type: string
+                            minLength: 1
+                        required:
+                          - code
+                          - critical
+                          - description
+                      device_access:
+                        type: object
+                        properties:
+                          code:
+                            type: number
+                          critical:
+                            type: boolean
+                          description:
+                            type: string
+                            minLength: 1
+                          verification_token: {}
+                        required:
+                          - code
+                          - critical
+                          - description
+                    required:
+                      - _key
+                      - _id
+                      - _rev
+                      - user_id
+                      - session_token
+                      - expired
+                      - meta
+                      - session_unlocked
+                      - verifications_access
+                      - device_access
+                required:
+                  - _key
+                  - _id
+                  - _rev
+                  - email
+                  - _created
+                  - _updated
+                  - devices
+                  - current_session
+              examples:
+                Get informations:
+                  value:
+                    _key: '389775'
+                    _id: users/389775
+                    _rev: _cNP-daK---
+                    email: gleadstesting-a0bgb2j4qhck9l4lesvsd@gleads.io
+                    _created: '2021-04-21T11:46:10+00:00'
+                    _updated: '2021-04-21T11:46:10+00:00'
+                    devices:
+                      UG9zdG1hblJ1bnRpbWUvNy4yNi44LS00NS4xMi4yMjEuMTg=:
+                        id: null
+                        verified: true
+                        date: '2021-04-21T11:46:10+00:00'
+                    current_session:
+                      _key: ddd38a84-999d-46a5-949f-3bf7232f6ace
+                      _id: sessions/ddd38a84-999d-46a5-949f-3bf7232f6ace
+                      _rev: _cNPoQZ6---
+                      user_id: '389775'
+                      session_token: ddd38a84-999d-46a5-949f-3bf7232f6ace
+                      expired: false
+                      meta:
+                        userAgent: PostmanRuntime/7.26.8
+                        clientIp: 45.12.221.18
+                        deviceHash: UG9zdG1hblJ1bnRpbWUvNy4yNi44LS00NS4xMi4yMjEuMTg=
+                      session_unlocked: '2021-04-21T12:31:49+00:00'
+                      verifications_access:
+                        code: 2000
+                        critical: false
+                        description: Verifications completed
+                      device_access:
+                        code: 1000
+                        critical: false
+                        description: User access granted
+                        verification_token: null
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  name:
+                    type: string
+                    minLength: 1
+                  message:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                  type:
+                    type: string
+                    minLength: 1
+                required:
+                  - name
+                  - message
+                  - code
+                  - type
+              examples:
+                Invalid token:
+                  value:
+                    name: UnAuthorizedError
+                    message: Unauthorized
+                    code: 401
+                    type: INVALID_TOKEN
+                No token provided:
+                  value:
+                    name: UnAuthorizedError
+                    message: Unauthorized
+                    code: 401
+                    type: NO_TOKEN
+      operationId: get-api-private-users-me
+      security:
+        - Session token: []
+      description: Get current session user information
 components:
   schemas:
     User:
@@ -970,4 +1182,7 @@ components:
         - lastName
         - email
         - emailVerified
-  securitySchemes: {}
+  securitySchemes:
+    Session token:
+      type: http
+      scheme: bearer
