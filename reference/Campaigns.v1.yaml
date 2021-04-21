@@ -148,6 +148,200 @@ paths:
       description: Get campaigns list for a user
       security:
         - User session: []
+    post:
+      summary: Create a new campaign
+      operationId: post-api-private-campaigns
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  code:
+                    type: number
+                  description:
+                    type: string
+                    minLength: 1
+                  campaign:
+                    type: string
+                    minLength: 1
+                required:
+                  - code
+                  - description
+                  - campaign
+              examples:
+                Campaign created:
+                  value:
+                    code: 1000
+                    description: Campaign created
+                    campaign: '351933'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                No token provided:
+                  value:
+                    name: UnAuthorizedError
+                    message: Unauthorized
+                    code: 401
+                    type: NO_TOKEN
+                Invalid token provided:
+                  value:
+                    name: UnAuthorizedError
+                    message: Unauthorized
+                    code: 401
+                    type: INVALID_TOKEN
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  name:
+                    type: string
+                    minLength: 1
+                  message:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                  type:
+                    type: string
+                    minLength: 1
+                  data:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      required:
+                        - type
+                        - message
+                        - field
+                        - nodeID
+                        - action
+                      properties:
+                        type:
+                          type: string
+                          minLength: 1
+                        message:
+                          type: string
+                          minLength: 1
+                        field:
+                          type: string
+                          minLength: 1
+                        nodeID:
+                          type: string
+                          minLength: 1
+                        action:
+                          type: string
+                          minLength: 1
+                required:
+                  - name
+                  - message
+                  - code
+                  - type
+                  - data
+              examples:
+                No form data push:
+                  value:
+                    name: ValidationError
+                    message: Parameters validation error!
+                    code: 422
+                    type: VALIDATION_ERROR
+                    data:
+                      - type: required
+                        message: The 'countries' field is required.
+                        field: countries
+                        nodeID: vps-2347f1db.vps.ovh.net.novalocal-549873
+                        action: campaigns.create
+                      - type: required
+                        message: The 'type' field is required.
+                        field: type
+                        nodeID: vps-2347f1db.vps.ovh.net.novalocal-549873
+                        action: campaigns.create
+                      - type: required
+                        message: The 'divisions' field is required.
+                        field: divisions
+                        nodeID: vps-2347f1db.vps.ovh.net.novalocal-549873
+                        action: campaigns.create
+                Missing countries field:
+                  value:
+                    name: ValidationError
+                    message: Parameters validation error!
+                    code: 422
+                    type: VALIDATION_ERROR
+                    data:
+                      - type: required
+                        message: The 'countries' field is required.
+                        field: countries
+                        nodeID: vps-2347f1db.vps.ovh.net.novalocal-549873
+                        action: campaigns.create
+                Missing divisions field:
+                  value:
+                    countries:
+                      - FR
+                      - PT
+                    type: sms
+                    schedule: '2021-04-18T11:22:00+1'
+                Missing type:
+                  value:
+                    name: ValidationError
+                    message: Parameters validation error!
+                    code: 422
+                    type: VALIDATION_ERROR
+                    data:
+                      - type: required
+                        message: The 'type' field is required.
+                        field: type
+                        nodeID: vps-2347f1db.vps.ovh.net.novalocal-549873
+                        action: campaigns.create
+      description: Create a new campaign
+      security:
+        - User session: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                countries:
+                  type: array
+                  items:
+                    type: object
+                divisions:
+                  type: array
+                  items:
+                    type: object
+                type:
+                  type: string
+                  minLength: 1
+                schedule:
+                  type: string
+                  minLength: 1
+              required:
+                - countries
+                - divisions
+                - type
+            examples:
+              'Create a campaign in France & Portugal for divisions : Commodities & type SMS':
+                value:
+                  countries:
+                    - FR
+                    - PT
+                  divisions:
+                    - COMMODITIES
+                  type: sms
+                  schedule: '2021-04-18T11:22:00+1'
 components:
   schemas:
     Campaign:
