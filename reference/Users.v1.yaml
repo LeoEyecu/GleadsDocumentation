@@ -425,7 +425,7 @@ paths:
           description: application/json
   /api/users/signup:
     post:
-      summary: Create New User
+      summary: User signup
       operationId: post-user
       responses:
         '200':
