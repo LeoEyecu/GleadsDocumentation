@@ -13,6 +13,93 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  code:
+                    type: number
+                  critical:
+                    type: boolean
+                  countries:
+                    type: object
+                    properties:
+                      AF:
+                        type: object
+                        properties:
+                          iso:
+                            type: string
+                            minLength: 1
+                          name:
+                            type: string
+                            minLength: 1
+                        required:
+                          - iso
+                          - name
+                      AL:
+                        type: object
+                        properties:
+                          iso:
+                            type: string
+                            minLength: 1
+                          name:
+                            type: string
+                            minLength: 1
+                        required:
+                          - iso
+                          - name
+                      DZ:
+                        type: object
+                        properties:
+                          iso:
+                            type: string
+                            minLength: 1
+                          name:
+                            type: string
+                            minLength: 1
+                        required:
+                          - iso
+                          - name
+                    required:
+                      - AF
+                      - AL
+                      - DZ
+                required:
+                  - code
+                  - critical
+                  - countries
+              examples:
+                Countries list:
+                  value:
+                    code: 1000
+                    critical: true
+                    countries:
+                      AF:
+                        iso: AF
+                        name: Afghanistan
+                      AL:
+                        iso: AL
+                        name: Albania
+                      DZ:
+                        iso: DZ
+                        name: Algeria
+                      AS:
+                        iso: AS
+                        name: American Samoa
+                      AD:
+                        iso: AD
+                        name: Andorra
+                      AO:
+                        iso: AO
+                        name: Angola
+                      AI:
+                        iso: AI
+                        name: Anguilla
+                      AQ:
+                        iso: AQ
+                        name: Antarctica
         '401':
           description: Unauthorized
           content:
