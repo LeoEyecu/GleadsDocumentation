@@ -412,7 +412,11 @@ paths:
                 value:
                   email: test@test.com
                   password: Aa5685855
-      description: User authentication
+        description: ''
+      description: |-
+        User authentication
+
+        -- If you a user require to pass a verification, please take a look at 'verification_access' and 'device_acess' response inside body
       parameters:
         - schema:
             type: string
