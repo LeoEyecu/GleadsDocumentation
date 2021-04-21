@@ -1,0 +1,62 @@
+openapi: 3.0.0
+info:
+  title: Data
+  version: '1.0'
+servers:
+  - url: 'https://st-api.gleads.io'
+    description: DEV API
+paths:
+  /api/private/data/countries:
+    get:
+      summary: Get countries list
+      tags: []
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  name:
+                    type: string
+                    minLength: 1
+                  message:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                  type:
+                    type: string
+                    minLength: 1
+                required:
+                  - name
+                  - message
+                  - code
+                  - type
+              examples:
+                Invalid token:
+                  value:
+                    name: UnAuthorizedError
+                    message: Unauthorized
+                    code: 401
+                    type: INVALID_TOKEN
+                No token provided:
+                  value:
+                    name: UnAuthorizedError
+                    message: Unauthorized
+                    code: 401
+                    type: NO_TOKEN
+      operationId: get-api-private-data-countries
+      description: Get countries list
+      security:
+        - Session token: []
+components:
+  schemas: {}
+  securitySchemes:
+    Session token:
+      type: http
+      scheme: bearer
