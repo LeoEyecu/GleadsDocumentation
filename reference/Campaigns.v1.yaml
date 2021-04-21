@@ -1,0 +1,322 @@
+openapi: 3.0.0
+info:
+  title: Campaigns
+  version: '1.0'
+servers:
+  - url: 'https://st-api.gleads.io'
+    description: DEV API
+paths:
+  /api/private/campaigns:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  code:
+                    type: number
+                  description:
+                    type: string
+                    minLength: 1
+                  campaigns:
+                    type: array
+                    items: {}
+                  user_id:
+                    type: string
+                    minLength: 1
+                required:
+                  - code
+                  - description
+                  - campaigns
+                  - user_id
+              examples:
+                Campaigns list:
+                  value:
+                    code: 1000
+                    description: Campaigns list
+                    campaigns:
+                      - _key: '350020'
+                        _id: campaigns/350020
+                        _rev: _cNBVhEq---
+                        user_id: '84304'
+                        name: 'Campaign #1'
+                        type: sms
+                        countries:
+                          - FR
+                          - PT
+                        created_at: '2021-04-20T19:52:41+00:00'
+                        status:
+                          id: SETUP
+                          color: '#FF0000'
+                        scheduled_start: '2021-04-20T21:52:41+00:00'
+                        started:
+                          date: null
+                        payment: null
+                        tracker_id: bbb9e12c-e14a-498a-8a97-4c3f36c1b508
+                        tracker:
+                          _key: bbb9e12c-e14a-498a-8a97-4c3f36c1b508
+                          _id: trackers/bbb9e12c-e14a-498a-8a97-4c3f36c1b508
+                          _rev: _cNBVhEi---
+                          campaign_id: '350020'
+                          localisation:
+                            DK:
+                              total: 8
+                              cities:
+                                Copenhagen: 8
+                          global:
+                            view: '8'
+                          historical:
+                            2021-04-20 19: '1'
+                            2021-04-20 20: '7'
+                      - _key: '351933'
+                        _id: campaigns/351933
+                        _rev: _cNCBBii---
+                        user_id: '84304'
+                        name: 'Campaign #2'
+                        type: sms
+                        countries:
+                          - FR
+                          - PT
+                        created_at: '2021-04-20T20:40:12+00:00'
+                        status:
+                          id: SETUP
+                          color: '#FF0000'
+                        scheduled_start: '2021-04-20T22:40:12+00:00'
+                        started:
+                          date: null
+                        payment: null
+                        tracker_id: f6f934fe-9da3-41b4-80af-58e2c3275c87
+                        tracker:
+                          _key: f6f934fe-9da3-41b4-80af-58e2c3275c87
+                          _id: trackers/f6f934fe-9da3-41b4-80af-58e2c3275c87
+                          _rev: _cNCBBiW---
+                          campaign_id: '351933'
+                          localisation: {}
+                          global: {}
+                          historical: {}
+                    user_id: '84304'
+                Campaigns list empty:
+                  value:
+                    code: 1000
+                    description: Campaigns list
+                    campaigns: []
+                    user_id: '84304'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  name:
+                    type: string
+                    minLength: 1
+                  message:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                  type:
+                    type: string
+                    minLength: 1
+                required:
+                  - name
+                  - message
+                  - code
+                  - type
+              examples:
+                Invalid token:
+                  value:
+                    name: UnAuthorizedError
+                    message: Unauthorized
+                    code: 401
+                    type: INVALID_TOKEN
+                No token provided:
+                  value:
+                    name: UnAuthorizedError
+                    message: Unauthorized
+                    code: 401
+                    type: NO_TOKEN
+      operationId: get-api-private-campaigns
+      description: Get campaigns list for a user
+      security:
+        - User session: []
+components:
+  schemas:
+    Campaign:
+      description: Campaign item
+      type: object
+      properties:
+        _key:
+          type: string
+          minLength: 1
+        _id:
+          type: string
+          minLength: 1
+        _rev:
+          type: string
+          minLength: 1
+        user_id:
+          type: string
+          minLength: 1
+        name:
+          type: string
+          minLength: 1
+        type:
+          type: string
+          minLength: 1
+        countries:
+          type: array
+          items:
+            required: []
+            properties: {}
+        created_at:
+          type: string
+          minLength: 1
+        status:
+          type: object
+          properties:
+            id:
+              type: string
+              minLength: 1
+            color:
+              type: string
+              minLength: 1
+          required:
+            - id
+            - color
+        scheduled_start:
+          type: string
+          minLength: 1
+        started:
+          type: object
+          properties:
+            date: {}
+          required: []
+        payment: {}
+        tracker_id:
+          type: string
+          minLength: 1
+        tracker:
+          type: object
+          properties:
+            _key:
+              type: string
+              minLength: 1
+            _id:
+              type: string
+              minLength: 1
+            _rev:
+              type: string
+              minLength: 1
+            campaign_id:
+              type: string
+              minLength: 1
+            localisation:
+              type: object
+              properties:
+                DK:
+                  type: object
+                  properties:
+                    total:
+                      type: number
+                    cities:
+                      type: object
+                      properties:
+                        Copenhagen:
+                          type: number
+                      required:
+                        - Copenhagen
+                  required:
+                    - total
+                    - cities
+              required:
+                - DK
+            global:
+              type: object
+              properties:
+                view:
+                  type: string
+                  minLength: 1
+              required:
+                - view
+            historical:
+              type: object
+              properties:
+                2021-04-20 19:
+                  type: string
+                  minLength: 1
+                2021-04-20 20:
+                  type: string
+                  minLength: 1
+              required:
+                - 2021-04-20 19
+                - 2021-04-20 20
+          required:
+            - _key
+            - _id
+            - _rev
+            - campaign_id
+            - localisation
+            - global
+            - historical
+      required:
+        - _key
+        - _id
+        - _rev
+        - user_id
+        - name
+        - type
+        - countries
+        - created_at
+        - status
+        - scheduled_start
+        - started
+        - tracker_id
+        - tracker
+      x-examples:
+        Example campaign:
+          _key: '350020'
+          _id: campaigns/350020
+          _rev: _cNBVhEq---
+          user_id: '84304'
+          name: 'Campaign #1'
+          type: sms
+          countries:
+            - FR
+            - PT
+          created_at: '2021-04-20T19:52:41+00:00'
+          status:
+            id: SETUP
+            color: '#FF0000'
+          scheduled_start: '2021-04-20T21:52:41+00:00'
+          started:
+            date: null
+          payment: null
+          tracker_id: bbb9e12c-e14a-498a-8a97-4c3f36c1b508
+          tracker:
+            _key: bbb9e12c-e14a-498a-8a97-4c3f36c1b508
+            _id: trackers/bbb9e12c-e14a-498a-8a97-4c3f36c1b508
+            _rev: _cNBVhEi---
+            campaign_id: '350020'
+            localisation:
+              DK:
+                total: 8
+                cities:
+                  Copenhagen: 8
+            global:
+              view: '8'
+            historical:
+              2021-04-20 19: '1'
+              2021-04-20 20: '7'
+  securitySchemes:
+    User session:
+      type: http
+      scheme: bearer
