@@ -433,17 +433,262 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                description: ''
+                type: object
+                properties:
+                  _key:
+                    type: string
+                    minLength: 1
+                  _id:
+                    type: string
+                    minLength: 1
+                  _rev:
+                    type: string
+                    minLength: 1
+                  user_id:
+                    type: string
+                    minLength: 1
+                  session_token:
+                    type: string
+                    minLength: 1
+                  expired:
+                    type: boolean
+                  meta:
+                    type: object
+                    properties:
+                      userAgent:
+                        type: string
+                        minLength: 1
+                      clientIp:
+                        type: string
+                        minLength: 1
+                      deviceHash:
+                        type: string
+                        minLength: 1
+                    required:
+                      - userAgent
+                      - clientIp
+                      - deviceHash
+                  session_unlocked:
+                    type: string
+                    minLength: 1
+                  verifications_access:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      critical:
+                        type: boolean
+                      description:
+                        type: string
+                        minLength: 1
+                      verification_method:
+                        type: string
+                        minLength: 1
+                      verification_infos:
+                        type: object
+                        properties:
+                          _key:
+                            type: string
+                            minLength: 1
+                          gateway:
+                            type: string
+                            minLength: 1
+                          type:
+                            type: string
+                            minLength: 1
+                          token:
+                            type: string
+                            minLength: 1
+                          code:
+                            type: string
+                            minLength: 1
+                          verified:
+                            type: boolean
+                          submited:
+                            type: string
+                            minLength: 1
+                          resolved: {}
+                        required:
+                          - _key
+                          - gateway
+                          - type
+                          - token
+                          - code
+                          - verified
+                          - submited
+                    required:
+                      - code
+                      - critical
+                      - description
+                      - verification_method
+                      - verification_infos
+                  device_access:
+                    type: object
+                    properties:
+                      code:
+                        type: number
+                      critical:
+                        type: boolean
+                      description:
+                        type: string
+                        minLength: 1
+                      verification_token: {}
+                    required:
+                      - code
+                      - critical
+                      - description
+                  user:
+                    type: object
+                    properties:
+                      _key:
+                        type: string
+                        minLength: 1
+                      _id:
+                        type: string
+                        minLength: 1
+                      _rev:
+                        type: string
+                        minLength: 1
+                      email:
+                        type: string
+                        minLength: 1
+                      _created:
+                        type: string
+                        minLength: 1
+                      _updated:
+                        type: string
+                        minLength: 1
+                      devices:
+                        type: object
+                        properties:
+                          UG9zdG1hblJ1bnRpbWUvNy4yNi44LS00NS4xMi4yMjEuMTg=:
+                            type: object
+                            properties:
+                              id: {}
+                              verified:
+                                type: boolean
+                              date:
+                                type: string
+                                minLength: 1
+                            required:
+                              - verified
+                              - date
+                        required:
+                          - UG9zdG1hblJ1bnRpbWUvNy4yNi44LS00NS4xMi4yMjEuMTg=
+                      verifications:
+                        type: object
+                        properties:
+                          email:
+                            type: object
+                            properties:
+                              _key:
+                                type: string
+                                minLength: 1
+                              gateway:
+                                type: string
+                                minLength: 1
+                              type:
+                                type: string
+                                minLength: 1
+                              token:
+                                type: string
+                                minLength: 1
+                              code:
+                                type: string
+                                minLength: 1
+                              verified:
+                                type: boolean
+                              submited:
+                                type: string
+                                minLength: 1
+                              resolved: {}
+                            required:
+                              - _key
+                              - gateway
+                              - type
+                              - token
+                              - code
+                              - verified
+                              - submited
+                        required:
+                          - email
+                    required:
+                      - _key
+                      - _id
+                      - _rev
+                      - email
+                      - _created
+                      - _updated
+                      - devices
+                      - verifications
+                required:
+                  - _key
+                  - _id
+                  - _rev
+                  - user_id
+                  - session_token
+                  - expired
+                  - meta
+                  - session_unlocked
+                  - verifications_access
+                  - device_access
+                  - user
               examples:
-                New User Bob Fellow:
+                New user created:
                   value:
-                    id: 12
-                    firstName: Bob
-                    lastName: Fellow
-                    email: bob.fellow@gmail.com
-                    dateOfBirth: '1996-08-24'
-                    emailVerified: false
-                    createDate: '2020-11-18'
+                    _key: ce8bc105-896e-45ab-a8b6-1aa861528150
+                    _id: sessions/ce8bc105-896e-45ab-a8b6-1aa861528150
+                    _rev: _cNP-dcu---
+                    user_id: '389775'
+                    session_token: ce8bc105-896e-45ab-a8b6-1aa861528150
+                    expired: false
+                    meta:
+                      userAgent: PostmanRuntime/7.26.8
+                      clientIp: 45.12.221.18
+                      deviceHash: UG9zdG1hblJ1bnRpbWUvNy4yNi44LS00NS4xMi4yMjEuMTg=
+                    session_unlocked: '2021-04-21T11:46:10+00:00'
+                    verifications_access:
+                      code: 2100
+                      critical: false
+                      description: Verification required
+                      verification_method: email
+                      verification_infos:
+                        _key: 37c405a7-1c21-43c8-8c7d-ceaebce6d59c
+                        gateway: email
+                        type: verifications
+                        token: 37c405a7-1c21-43c8-8c7d-ceaebce6d59c
+                        code: a884d32d-cc27-4c73-ab33-b03807b9603a
+                        verified: false
+                        submited: '2021-04-21T11:46:10+00:00'
+                        resolved: null
+                    device_access:
+                      code: 1000
+                      critical: false
+                      description: User access granted
+                      verification_token: null
+                    user:
+                      _key: '389775'
+                      _id: users/389775
+                      _rev: _cNP-dca---
+                      email: gleadstesting-a0bgb2j4qhck9l4lesvsd@gleads.io
+                      _created: '2021-04-21T11:46:10+00:00'
+                      _updated: '2021-04-21T11:46:10+00:00'
+                      devices:
+                        UG9zdG1hblJ1bnRpbWUvNy4yNi44LS00NS4xMi4yMjEuMTg=:
+                          id: null
+                          verified: true
+                          date: '2021-04-21T11:46:10+00:00'
+                      verifications:
+                        email:
+                          _key: 37c405a7-1c21-43c8-8c7d-ceaebce6d59c
+                          gateway: email
+                          type: verifications
+                          token: 37c405a7-1c21-43c8-8c7d-ceaebce6d59c
+                          code: a884d32d-cc27-4c73-ab33-b03807b9603a
+                          verified: false
+                          submited: '2021-04-21T11:46:10+00:00'
+                          resolved: null
         '400':
           description: Bad request
           content:
