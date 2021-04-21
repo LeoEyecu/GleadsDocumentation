@@ -8,7 +8,7 @@ servers:
 paths:
   /api/private/campaigns:
     get:
-      summary: Your GET endpoint
+      summary: Get campaigns list for a user
       tags: []
       responses:
         '200':
