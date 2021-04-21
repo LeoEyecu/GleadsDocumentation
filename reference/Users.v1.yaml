@@ -423,7 +423,7 @@ paths:
           in: header
           name: Content-Type
           description: application/json
-  /user:
+  /api/users/signup:
     post:
       summary: Create New User
       operationId: post-user
@@ -445,9 +445,214 @@ paths:
                     emailVerified: false
                     createDate: '2020-11-18'
         '400':
-          description: Missing Required Information
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  name:
+                    type: string
+                    minLength: 1
+                  message:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                  type:
+                    type: string
+                    minLength: 1
+                  data:
+                    type: object
+                    properties:
+                      msg:
+                        type: string
+                        minLength: 1
+                    required:
+                      - msg
+                required:
+                  - name
+                  - message
+                  - code
+                  - type
+                  - data
+              examples:
+                Passwords are not matching:
+                  value:
+                    name: SignupPasswordNotMatch
+                    message: Signup error
+                    code: 400
+                    type: SIGNUP_ERROR_PASSWORDS_NOT_MATCH
+                    data:
+                      msg: Passwords are not matching
+                Passwords are not matching minimum policy:
+                  value:
+                    name: SignupPasswordNotMatchPolicy
+                    message: Signup error
+                    code: 400
+                    type: SIGNUP_ERROR_PASSWORDS_NOT_MATCH_POLICY
+                    data:
+                      msg: Passwords are not matching the minimum policy
         '409':
           description: Email Already Taken
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  name:
+                    type: string
+                    minLength: 1
+                  message:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                  type:
+                    type: string
+                    minLength: 1
+                  data:
+                    type: object
+                    properties:
+                      msg:
+                        type: string
+                        minLength: 1
+                    required:
+                      - msg
+                required:
+                  - name
+                  - message
+                  - code
+                  - type
+                  - data
+              examples:
+                Email already exist:
+                  value:
+                    name: SignupEmailAlreadyInUse
+                    message: Signup error
+                    code: 409
+                    type: SIGNUP_ERROR_EMAIL_ALREADY_IN_USE
+                    data:
+                      msg: The email is already in use in an other account
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  name:
+                    type: string
+                    minLength: 1
+                  message:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                  type:
+                    type: string
+                    minLength: 1
+                  data:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      required:
+                        - type
+                        - message
+                        - field
+                        - nodeID
+                        - action
+                      properties:
+                        type:
+                          type: string
+                          minLength: 1
+                        message:
+                          type: string
+                          minLength: 1
+                        field:
+                          type: string
+                          minLength: 1
+                        nodeID:
+                          type: string
+                          minLength: 1
+                        action:
+                          type: string
+                          minLength: 1
+                required:
+                  - name
+                  - message
+                  - code
+                  - type
+                  - data
+              examples:
+                No data passed to the signup request:
+                  value:
+                    name: ValidationError
+                    message: Parameters validation error!
+                    code: 422
+                    type: VALIDATION_ERROR
+                    data:
+                      - type: required
+                        message: The 'email' field is required.
+                        field: email
+                        nodeID: vps-2347f1db.vps.ovh.net.novalocal-549873
+                        action: users.signup
+                      - type: required
+                        message: The 'password' field is required.
+                        field: password
+                        nodeID: vps-2347f1db.vps.ovh.net.novalocal-549873
+                        action: users.signup
+                      - type: required
+                        message: The 'password_repeat' field is required.
+                        field: password_repeat
+                        nodeID: vps-2347f1db.vps.ovh.net.novalocal-549873
+                        action: users.signup
+                Invalid email:
+                  value:
+                    name: ValidationError
+                    message: Parameters validation error!
+                    code: 422
+                    type: VALIDATION_ERROR
+                    data:
+                      - type: email
+                        message: The 'email' field must be a valid e-mail.
+                        field: email
+                        actual: ok
+                        nodeID: vps-2347f1db.vps.ovh.net.novalocal-549873
+                        action: users.signup
+                No password & password repeat provided:
+                  value:
+                    name: ValidationError
+                    message: Parameters validation error!
+                    code: 422
+                    type: VALIDATION_ERROR
+                    data:
+                      - type: required
+                        message: The 'password' field is required.
+                        field: password
+                        nodeID: vps-2347f1db.vps.ovh.net.novalocal-549873
+                        action: users.signup
+                      - type: required
+                        message: The 'password_repeat' field is required.
+                        field: password_repeat
+                        nodeID: vps-2347f1db.vps.ovh.net.novalocal-549873
+                        action: users.signup
+                Password repeat not provided:
+                  value:
+                    name: ValidationError
+                    message: Parameters validation error!
+                    code: 422
+                    type: VALIDATION_ERROR
+                    data:
+                      - type: required
+                        message: The 'password_repeat' field is required.
+                        field: password_repeat
+                        nodeID: vps-2347f1db.vps.ovh.net.novalocal-549873
+                        action: users.signup
       requestBody:
         content:
           application/json:
@@ -477,6 +682,7 @@ paths:
                   dateOfBirth: '1996-08-24'
         description: Post the necessary fields for the API to create a new user.
       description: Create a new user.
+    parameters: []
 components:
   schemas:
     User:
