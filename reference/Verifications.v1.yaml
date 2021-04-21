@@ -199,5 +199,26 @@ paths:
                         nodeID: vps-2347f1db.vps.ovh.net.novalocal-549873
                         action: verifications.validate
       description: Validate a confirmation request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                token:
+                  type: string
+                  minLength: 1
+                code:
+                  type: string
+                  minLength: 1
+              required:
+                - token
+                - code
+            examples:
+              Validate request:
+                value:
+                  token: ddd38a84-999d-46a5-949f-3bf7232f6ace
+                  code: a884d32d-cc27-4c73-ab33-b03807b9603a
 components:
   schemas: {}
