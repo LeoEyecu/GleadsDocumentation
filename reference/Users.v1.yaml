@@ -181,6 +181,54 @@ paths:
                   - verifications_access
                   - device_access
                   - user
+              examples:
+                Valid login:
+                  value:
+                    _key: fdeabcf1-6d25-406a-830e-8980f85fc688
+                    _id: sessions/fdeabcf1-6d25-406a-830e-8980f85fc688
+                    _rev: _cNBR9A2---
+                    user_id: '84304'
+                    session_token: fdeabcf1-6d25-406a-830e-8980f85fc688
+                    expired: false
+                    meta:
+                      userAgent: PostmanRuntime/7.26.8
+                      clientIp: 45.12.221.18
+                      deviceHash: UG9zdG1hblJ1bnRpbWUvNy4yNi44LS00NS4xMi4yMjEuMTg=
+                    session_unlocked: '2021-04-20T19:48:47+00:00'
+                    verifications_access:
+                      code: 2000
+                      critical: false
+                      description: Verifications completed
+                    device_access:
+                      code: 1000
+                      critical: false
+                      description: User access granted
+                      verification_token: null
+                    user:
+                      _key: '84304'
+                      _id: users/84304
+                      _rev: _cLatWZ----
+                      email: gleadstesting-v8o20jpo79dojs8e5mvea@gleads.io
+                      _created: '2021-04-15T20:17:02+00:00'
+                      _updated: '2021-04-15T20:17:02+00:00'
+                      devices:
+                        UG9zdG1hblJ1bnRpbWUvNy4yNi44LS00NS4xMi4yMjEuMTg=:
+                          id: null
+                          verified: true
+                          date: '2021-04-15T20:17:02+00:00'
+                      verifications:
+                        email:
+                          _key: fafc0af6-9323-4d8b-ab1f-0426ba6fab05
+                          code: bb028571-05f2-4a71-949a-1ff9c97dc42c
+                          gateway: email
+                          resolved: '2021-04-15T20:17:03+00:00'
+                          submited: '2021-04-15T20:17:02+00:00'
+                          token: fafc0af6-9323-4d8b-ab1f-0426ba6fab05
+                          type: verifications
+                          verified: true
+                          user_id: '84304'
+                          _id: verifications/fafc0af6-9323-4d8b-ab1f-0426ba6fab05
+                          _rev: _cLasCTa---
         '401':
           description: Unauthorized
           content:
