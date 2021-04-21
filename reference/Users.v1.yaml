@@ -9,13 +9,248 @@ paths:
   /api/users/login:
     parameters: []
     post:
-      summary: ''
+      summary: User authentication
       operationId: post-api-users-login
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  _key:
+                    type: string
+                    minLength: 1
+                  _id:
+                    type: string
+                    minLength: 1
+                  _rev:
+                    type: string
+                    minLength: 1
+                  user_id:
+                    type: string
+                    minLength: 1
+                  session_token:
+                    type: string
+                    minLength: 1
+                  expired:
+                    type: boolean
+                  meta:
+                    type: object
+                    required:
+                      - userAgent
+                      - clientIp
+                      - deviceHash
+                    properties:
+                      userAgent:
+                        type: string
+                        minLength: 1
+                      clientIp:
+                        type: string
+                        minLength: 1
+                      deviceHash:
+                        type: string
+                        minLength: 1
+                  session_unlocked:
+                    type: string
+                    minLength: 1
+                  verifications_access:
+                    type: object
+                    required:
+                      - code
+                      - critical
+                      - description
+                    properties:
+                      code:
+                        type: number
+                      critical:
+                        type: boolean
+                      description:
+                        type: string
+                        minLength: 1
+                  device_access:
+                    type: object
+                    required:
+                      - code
+                      - critical
+                      - description
+                    properties:
+                      code:
+                        type: number
+                      critical:
+                        type: boolean
+                      description:
+                        type: string
+                        minLength: 1
+                      verification_token: {}
+                  user:
+                    type: object
+                    required:
+                      - _key
+                      - _id
+                      - _rev
+                      - email
+                      - _created
+                      - _updated
+                      - devices
+                      - verifications
+                    properties:
+                      _key:
+                        type: string
+                        minLength: 1
+                      _id:
+                        type: string
+                        minLength: 1
+                      _rev:
+                        type: string
+                        minLength: 1
+                      email:
+                        type: string
+                        minLength: 1
+                      _created:
+                        type: string
+                        minLength: 1
+                      _updated:
+                        type: string
+                        minLength: 1
+                      devices:
+                        type: object
+                      verifications:
+                        type: object
+                        required:
+                          - email
+                        properties:
+                          email:
+                            type: object
+                            required:
+                              - _key
+                              - code
+                              - gateway
+                              - resolved
+                              - submited
+                              - token
+                              - type
+                              - verified
+                              - user_id
+                              - _id
+                              - _rev
+                            properties:
+                              _key:
+                                type: string
+                                minLength: 1
+                              code:
+                                type: string
+                                minLength: 1
+                              gateway:
+                                type: string
+                                minLength: 1
+                              resolved:
+                                type: string
+                                minLength: 1
+                              submited:
+                                type: string
+                                minLength: 1
+                              token:
+                                type: string
+                                minLength: 1
+                              type:
+                                type: string
+                                minLength: 1
+                              verified:
+                                type: boolean
+                              user_id:
+                                type: string
+                                minLength: 1
+                              _id:
+                                type: string
+                                minLength: 1
+                              _rev:
+                                type: string
+                                minLength: 1
+                required:
+                  - _key
+                  - _id
+                  - _rev
+                  - user_id
+                  - session_token
+                  - expired
+                  - meta
+                  - session_unlocked
+                  - verifications_access
+                  - device_access
+                  - user
         '422':
           description: Form validation error
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  name:
+                    type: string
+                    minLength: 1
+                  message:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                  type:
+                    type: string
+                    minLength: 1
+                  data:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      required:
+                        - type
+                        - message
+                        - field
+                        - nodeID
+                        - action
+                      properties:
+                        type:
+                          type: string
+                          minLength: 1
+                        message:
+                          type: string
+                          minLength: 1
+                        field:
+                          type: string
+                          minLength: 1
+                        nodeID:
+                          type: string
+                          minLength: 1
+                        action:
+                          type: string
+                          minLength: 1
+                required:
+                  - name
+                  - message
+                  - code
+                  - type
+                  - data
+              examples:
+                Validation error:
+                  value:
+                    name: ValidationError
+                    message: Parameters validation error!
+                    code: 422
+                    type: VALIDATION_ERROR
+                    data:
+                      - type: required
+                        message: The 'email' field is required.
+                        field: email
+                        nodeID: vps-2347f1db.vps.ovh.net.novalocal-549873
+                        action: users.login
+                      - type: required
+                        message: The 'password' field is required.
+                        field: password
+                        nodeID: vps-2347f1db.vps.ovh.net.novalocal-549873
+                        action: users.login
       requestBody:
         content:
           application/json:
@@ -31,6 +266,7 @@ paths:
                 value:
                   email: test@test.com
                   password: Aa5685855
+      description: ''
   /user:
     post:
       summary: Create New User
