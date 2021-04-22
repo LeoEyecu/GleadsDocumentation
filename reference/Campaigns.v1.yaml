@@ -26,7 +26,8 @@ paths:
                     minLength: 1
                   campaigns:
                     type: array
-                    items: {}
+                    items:
+                      $ref: '#/components/schemas/Campaign'
                   user_id:
                     type: string
                     minLength: 1
@@ -342,6 +343,154 @@ paths:
                     - COMMODITIES
                   type: sms
                   schedule: '2021-04-18T11:22:00+1'
+  '/api/private/campaigns/{id}':
+    get:
+      summary: Get campaign informations
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Campaign'
+              examples:
+                Campaign information:
+                  value:
+                    _key: '398330'
+                    _id: campaigns/398330
+                    _rev: _cNXAVf----
+                    user_id: '393663'
+                    name: 'Campaign #6'
+                    type: sms
+                    countries:
+                      - FR
+                      - PT
+                    created_at: '2021-04-21T14:50:24+00:00'
+                    status:
+                      color: '#5F05FF'
+                      id: WAITING_PAYMENT
+                      from_allowed:
+                        - SETUP
+                    scheduled_start: '2021-04-21T16:50:24+00:00'
+                    started:
+                      date: null
+                    payment: null
+                    tracker_id: 59865482-2d55-4248-b262-f0ec8bb90cfc
+                    payments:
+                      - 9d534b78-3699-4cd1-8ad2-80fbf01d195c
+                      - 3441ecc3-2a1e-4410-97a5-0d22ae6911ca
+                      - 958941ae-e153-4981-aa10-06ff8253f2b6
+                      - 89e39c17-642e-4290-a2fb-f131cbbbb9a2
+                      - c2856a96-13ff-4311-aff9-9821119c3d49
+                      - 3f8a161d-8bcf-4574-b79f-74f6025c26cd
+                      - b032b046-34e6-41ef-a78b-c98f013d78ee
+                      - 95150ba9-b5cf-4b1d-9fb5-d662fa8f7536
+                      - 8e1a035e-f14b-4560-8bf6-abca27174927
+                    tracker:
+                      _key: 59865482-2d55-4248-b262-f0ec8bb90cfc
+                      _id: trackers/59865482-2d55-4248-b262-f0ec8bb90cfc
+                      _rev: _cNRnIMS---
+                      campaign_id: '398330'
+                      localisation:
+                        DK:
+                          total: 1
+                          cities:
+                            Copenhagen: 1
+                      global:
+                        view: '1'
+                      historical:
+                        '2021-04-22T07:00:00+00:00': '1'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  name:
+                    type: string
+                    minLength: 1
+                  message:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                  type:
+                    type: string
+                    minLength: 1
+                required:
+                  - name
+                  - message
+                  - code
+                  - type
+              examples:
+                Invalid token:
+                  value:
+                    name: UnAuthorizedError
+                    message: Unauthorized
+                    code: 401
+                    type: INVALID_TOKEN
+                No token provided:
+                  value:
+                    name: UnAuthorizedError
+                    message: Unauthorized
+                    code: 401
+                    type: NO_TOKEN
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  name:
+                    type: string
+                    minLength: 1
+                  message:
+                    type: string
+                    minLength: 1
+                  code:
+                    type: number
+                  type:
+                    type: string
+                    minLength: 1
+                  data:
+                    type: object
+                    properties:
+                      msg:
+                        type: string
+                        minLength: 1
+                    required:
+                      - msg
+                required:
+                  - name
+                  - message
+                  - code
+                  - type
+                  - data
+              examples:
+                Campaign not found:
+                  value:
+                    name: CampaignNotFound
+                    message: Campaign error
+                    code: 404
+                    type: CAMPAIGN_ERROR
+                    data:
+                      msg: Campaign not found
+      operationId: 'get-api-private-campaigns-:id'
+      description: Get campaign informations by ID
+      security:
+        - User session: []
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: Campaign ID
 components:
   schemas:
     Campaign:
